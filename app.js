@@ -7,6 +7,7 @@ var express     = require("express"),
     LocalStrategy = require("passport-local"),
     methodOverride = require("method-override"),
     User        = require("./models/user")
+    
 
 //ROUTES SETUP
 var indexRoutes      = require("./routes/index")

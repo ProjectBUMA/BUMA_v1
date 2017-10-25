@@ -34,11 +34,16 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="<%= typeof page !== 'undefined' && page === 'login' ? 'active' : '' %>"><a href="/login">Login</a></li>
-                <li class="<%= typeof page !== 'undefined' && page === 'register' ? 'active' : '' %>"><a href="/register">Sign Up</a></li>
+                <!--<li class="<%= typeof page !== 'undefined' && page === 'register' ? 'active' : '' %>"><a href="/register">Sign Up</a></li>-->
             </ul>
           </div>
           <% }else{ %>
-            <a id="user-type" class="navbar-brand" href="/">SUPERVISER</a>
+              <%if(currentUser.isManager){%>
+                <a id="user-type" class="navbar-brand" href="/">SUPERVISER</a>
+              <%}else{%>
+                 <a id="user-type" class="navbar-brand" href="/">EMPLOYEE</a>
+              <%}%>
+              
           <%}%>
           
          
@@ -56,14 +61,21 @@
   </div>  
   
   <!--SIDE BAR-->
+  <% if(currentUser){ %>
   <div id="mySidenav" class="sidenav">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <%if(currentUser.isManager){%>
     <a href="/">View</a>
     <a href="#">SetWorking</a>
     <a href="#">SetActivity</a>
-    <a href="#">CreateUser</a>
+    <a href="/register">CreateUser</a>
+    <%}else{%>
+    <a href="/">View</a>
+    <a href="#">TakeOfficialLeave</a>
+    <%}%>
     <a href="/logout" >Logout</a>
   </div>
+  <%}%>
   
 <div class="container">
   
