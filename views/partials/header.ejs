@@ -26,22 +26,21 @@
                 <span class="icon-bar"></span>
               </button>
           
-              <a class="navbar-brand" href="/">BUMA</a>
+              <a class="navbar-brand" href="/"><i class="fa fa-calendar-check-o" aria-hidden="true"></i> BUMA</a>
           </div>
           <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
               
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li class="<%= typeof page !== 'undefined' && page === 'login' ? 'active' : '' %>"><a href="/login">Login</a></li>
-                <!--<li class="<%= typeof page !== 'undefined' && page === 'register' ? 'active' : '' %>"><a href="/register">Sign Up</a></li>-->
+                <li><a href="/login">Login</a></li>
             </ul>
           </div>
           <% }else{ %>
               <%if(currentUser.isManager){%>
-                <a id="user-type" class="navbar-brand" href="/">SUPERVISER</a>
+                <a id="user-type" class="navbar-brand" href="/"><i class="fa fa-briefcase" aria-hidden="true"></i> SUPERVISER</a>
               <%}else{%>
-                 <a id="user-type" class="navbar-brand" href="/">EMPLOYEE</a>
+                 <a id="user-type" class="navbar-brand" href="/"><i class="fa fa-user" aria-hidden="true"></i> EMPLOYEE</a>
               <%}%>
               
           <%}%>
@@ -64,16 +63,18 @@
   <% if(currentUser){ %>
   <div id="mySidenav" class="sidenav">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <a href="/"><i class="fa fa-calendar" aria-hidden="true"></i>  View</a>
     <%if(currentUser.isManager){%>
-    <a href="/">View</a>
-    <a href="#">SetWorking</a>
-    <a href="#">SetActivity</a>
-    <a href="/register">CreateUser</a>
+    <a href="#"><i class="fa fa-calendar-plus-o" aria-hidden="true"></i>  Set Working</a>
+    <a href="#"><i class="fa fa-coffee" aria-hidden="true"></i>  SetActivity</a>
+    <a href="/register"><i class="fa fa-user-plus" aria-hidden="true"></i>  Create User</a>
     <%}else{%>
-    <a href="/">View</a>
-    <a href="#">TakeOfficialLeave</a>
+    <a href="#"><i class="fa fa-calendar-times-o" aria-hidden="true"></i> Take Official Leave</a>
     <%}%>
-    <a href="/logout" >Logout</a>
+    <div class="send-to-bot">
+       <a href="/logout"> <i class="fa fa-sign-out" aria-hidden="true"></i>  Logout</a>
+    </div>
+   
   </div>
   <%}%>
   
