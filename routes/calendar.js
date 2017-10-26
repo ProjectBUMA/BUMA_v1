@@ -6,7 +6,61 @@ var Calendar = require("../models/calendar");
 
 //INDEX - show calendar
 router.get("/", middleware.isLoggedIn ,function(req, res){
-     res.render("calendar/show");
+     var userCalender = req.user.workCalendar;
+     var showCalendar = [];
+     var i = 0;
+     
+     userCalender.forEach(function(calendar){
+          Calendar.findById(calendar , function(err, thisCalendar) {
+               if(err){
+                    console.log(err)
+               }
+               var newObject = {};
+               newObject.title = thisCalendar.title;
+               newObject.start = thisCalendar.start;
+               newObject.end = thisCalendar.end;
+               
+               showCalendar.push(newObject);
+               i++;
+               if(i == userCalender.length){
+                    res.render("calendar/show" , {showCalendar:showCalendar});
+               }
+          })
+     })
+    
+});
+
+router.get("/:id/workingcalendar", middleware.isLoggedIn ,function(req, res){
+     
+     User.findById(req.params.id , function(err , user){
+        if(err){
+             console.log(err);
+        }  
+        else{
+               var userCalender = user.workCalendar;
+               var showCalendar = [];
+               var i = 0;
+     
+               userCalender.forEach(function(calendar){
+                    Calendar.findById(calendar , function(err, thisCalendar) {
+                         if(err){
+                              console.log(err)
+                         }
+                         var newObject = {};
+                         newObject.title = thisCalendar.title;
+                         newObject.start = thisCalendar.start;
+                         newObject.end = thisCalendar.end;
+                         
+                         showCalendar.push(newObject);
+                         i++;
+                         if(i == userCalender.length){
+                              res.render("calendar/show" , {showCalendar:showCalendar});
+                    }
+                    })
+               })
+         } 
+     });
+
 });
 
 
@@ -18,6 +72,18 @@ router.get("/emlist",middleware.isLoggedIn ,function(req,res){
            console.log(err);
        } else {
            res.render("calendar/emlist" , {users : allUser});
+       }
+    });
+});
+
+//show all employees for calendar
+router.get("/emcalendar",middleware.isLoggedIn ,function(req,res){
+     
+     User.find({}, function(err, allUser){
+       if(err){
+           console.log(err);
+       } else {
+           res.render("calendar/emcalendar" , {users : allUser});
        }
     });
 });
@@ -42,18 +108,17 @@ router.post("/:id/settime",middleware.isLoggedIn ,function(req,res){
              res.redirect("/");
           }
           else{
-               console.log(req.body.calendar)
+               var calendar = req.body.calendar
+               calendar.start = changeDateFormat(calendar.start);
+               calendar.end = changeDateFormat(calendar.end);
                
-               Calendar.create(req.body.calendar , function(err,calendar){
+               Calendar.create(req.body.calendar , function(err,newCalendar){
                     if(err){
                          req.flash("error", "Something went wrong");
                     }
                     else{
-                         calendar.start = changeDateFormat(calendar.start);
-                         calendar.end = changeDateFormat(calendar.end);
-                         user.workCalendar.push(calendar);
+                         user.workCalendar.push(newCalendar);
                          user.save();
-                         console.log(calendar);
                          req.flash("success", "Successfully added Working Calendar");
                          res.redirect('/');
                     }
@@ -73,14 +138,27 @@ function changeDateFormat(oldDate){
      var hour = oldDate[indexHour-2]+oldDate[indexHour-1];
      var min = oldDate[indexHour+1]+oldDate[indexHour+2];
      
-     hour = parseInt(hour);
-     if(hour == 12){
-          hour = "00" ;
+     if(oldDate.indexOf("P")!=-1){
+          hour = parseInt(hour);
+          if(hour == 12){
+               hour = "12" ;
+          }
+          else{
+               hour += 12;
+               hour = ""+hour;
+          }
      }
-     else{
-          hour += 12;
-          hour = ""+hour;
+     if(oldDate.indexOf("A")!=-1){
+          hour = parseInt(hour);
+          if(hour==12){
+               hour="00"
+          }
+          else if(hour<10){
+          hour="0"+hour
+          }
+          
      }
+     
      return year+"-"+month+"-"+date+"T"+hour+":"+min+":"+"00";
 }
 

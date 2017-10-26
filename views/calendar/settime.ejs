@@ -10,16 +10,16 @@
             });
             $('#startdate').datetimepicker().on('dp.change', function (e) {
                 var incrementDay = moment(new Date(e.date));
-                incrementDay.add(1, 'days');
+                incrementDay.add(1, 'hours');
                 $('#enddate').data('DateTimePicker').minDate(incrementDay);
-                $(this).data("DateTimePicker").hide();
+               <!--$(this).data("DateTimePicker").hide();-->
             });
 
             $('#enddate').datetimepicker().on('dp.change', function (e) {
                 var decrementDay = moment(new Date(e.date));
-                decrementDay.subtract(1, 'days');
+                decrementDay.subtract(1, 'hours');
                 $('#startdate').data('DateTimePicker').maxDate(decrementDay);
-                 $(this).data("DateTimePicker").hide();
+                 <!--$(this).data("DateTimePicker").hide();-->
             });
 
         });

@@ -1,13 +1,21 @@
 <% include ../partials/header %>  
-          
+	<h1><%=currentUser.username%></h1>
+      <% var test = currentUser.username %>
+      
+     <div class='test' showCalendar='<%= JSON.stringify(showCalendar) %>'></div>
+     
      <script>
 	$(document).ready(function() {
+		var showCalendar = $('.test').attr('showCalendar')
+  		
+  		var myobj = JSON.parse(showCalendar);
+  		console.log(myobj)
 		
 		$('#calendar').fullCalendar({
 			header: {
 				left: 'prev,next today',
 				center: 'title',
-				right: 'month'
+				right: 'month,agendaWeek,agendaDay,listMonth'
 			},
 			defaultDate: '2017-10-12',
 			navLinks: true, // can click day/week names to navigate views
@@ -16,27 +24,29 @@
 			select: function(start, end) {
 				//var title = prompt('Employee ID:');
 				//var workTime = prompt('Work time (Ex 8.00 - 16.00)');
-				var eventData;
-				if (title) {
-					eventData = {
-						title: title+" WorkTime : "+workTime,
-						id: title,
-						start: start,
-						end: end
-					};
-					$('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
-				}
+				// var eventData;
+				// if (title) {
+				// 	eventData = {
+				// 		title: title+" WorkTime : "+workTime,
+				// 		id: title,
+				// 		start: start,
+				// 		end: end
+				// 	};
+				//	$('#calendar').fullCalendar('renderEvent', myobj[0], true); // stick? = true
+				// }
 				$('#calendar').fullCalendar('unselect');
 			},
 			eventLimit: true, // allow "more" link when too many events
-			events: [
-				
-			]
+			events: 	myobj
+			
+			
 		});
 		
 	});
 	</script>
 	
      <div id='calendar'></div>
+     
+     
 
 <% include ../partials/footer %>

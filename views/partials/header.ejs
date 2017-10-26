@@ -72,12 +72,14 @@
   <% if(currentUser){ %>
   <div id="mySidenav" class="sidenav">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-    <a href="/calendar"><i class="fa fa-calendar" aria-hidden="true"></i>  View</a>
+    
     <%if(currentUser.isManager){%>
+    <a href="/calendar/emcalendar"><i class="fa fa-calendar" aria-hidden="true"></i>  View</a>
     <a href="/calendar/emlist"><i class="fa fa-calendar-plus-o" aria-hidden="true"></i>  Set Working</a>
     <a href="#"><i class="fa fa-coffee" aria-hidden="true"></i>  SetActivity</a>
     <a href="/register"><i class="fa fa-user-plus" aria-hidden="true"></i>  Create User</a>
     <%}else{%>
+    <a href="/calendar"><i class="fa fa-calendar" aria-hidden="true"></i>  View</a>
     <a href="#"><i class="fa fa-calendar-times-o" aria-hidden="true"></i> Take Official Leave</a>
     <%}%>
     <div class="send-to-bot">
