@@ -17,107 +17,7 @@
       
       <script src="https://rawgit.com/Eonasdan/bootstrap-datetimepicker/development/src/js/bootstrap-datetimepicker.js" ></script>
       <link rel="stylesheet" href="https://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/v4.0.0/build/css/bootstrap-datetimepicker.css">
-      <script>
 
-	$(document).ready(function() {
-		
-		$('#calendar').fullCalendar({
-			header: {
-				left: 'prev,next today',
-				center: 'title',
-				right: 'month'
-			},
-			defaultDate: '2017-10-12',
-			navLinks: true, // can click day/week names to navigate views
-			selectable: true,
-			selectHelper: true,
-			select: function(start, end) {
-				//var title = prompt('Employee ID:');
-				//var workTime = prompt('Work time (Ex 8.00 - 16.00)');
-				var eventData;
-				if (title) {
-					eventData = {
-						title: title+" WorkTime : "+workTime,
-						id: title,
-						start: start,
-						end: end
-					};
-					$('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
-				}
-				$('#calendar').fullCalendar('unselect');
-			},
-			eventLimit: true, // allow "more" link when too many events
-			events: [
-				{
-					title: 'All Day Event',
-					start: '2017-10-01'
-				},
-				{
-					title: 'Long Event',
-					start: '2017-10-07',
-					end: '2017-10-10'
-				},
-				{
-					id: 999,
-					title: 'Repeating Event',
-					start: '2017-10-09T16:00:00'
-				},
-				{
-					id: 999,
-					title: 'Repeating Event',
-					start: '2017-10-16T16:00:00'
-				},
-				{
-					title: 'Conference',
-					start: '2017-10-11',
-					end: '2017-10-13'
-				},
-				{
-					title: 'Meeting',
-					start: '2017-10-12T10:30:00',
-					end: '2017-10-12T12:30:00'
-				},
-				{
-					title: 'Lunch',
-					start: '2017-10-12T12:00:00'
-				},
-				{
-					title: 'Meeting',
-					start: '2017-10-12T14:30:00'
-				},
-				{
-					title: 'Happy Hour',
-					start: '2017-10-12T17:30:00'
-				},
-				{
-					title: 'Dinner',
-					start: '2017-10-12T20:00:00'
-				},
-				{
-					title: 'Birthday Party',
-					start: '2017-10-13T07:00:00'
-				},
-				{
-					title: 'Click for Google',
-					url: 'http://google.com/',
-					start: '2017-10-28'
-				}
-			]
-		});
-		
-	});
-
-</script>
-
-<style>
-
-	#calendar {
-		max-width: 900px;
-		margin: 0 auto;
-	}
-
-</style>
-      
   </head>
   <body>
   <nav class="navbar navbar-default">
@@ -174,7 +74,7 @@
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
     <a href="/calendar"><i class="fa fa-calendar" aria-hidden="true"></i>  View</a>
     <%if(currentUser.isManager){%>
-    <a href="#"><i class="fa fa-calendar-plus-o" aria-hidden="true"></i>  Set Working</a>
+    <a href="/calendar/emlist"><i class="fa fa-calendar-plus-o" aria-hidden="true"></i>  Set Working</a>
     <a href="#"><i class="fa fa-coffee" aria-hidden="true"></i>  SetActivity</a>
     <a href="/register"><i class="fa fa-user-plus" aria-hidden="true"></i>  Create User</a>
     <%}else{%>

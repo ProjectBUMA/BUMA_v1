@@ -1,0 +1,11 @@
+<% include ../partials/header %>
+
+     <% users.forEach(function(user){ %>
+          <%if(!user.isManager){%>
+           <div class="row">
+                  <a href="<%=user._id%>/settime"><%= user.username %></a>
+          </div>
+          <%}%>
+     <% }) %>
+
+<% include ../partials/footer %>
