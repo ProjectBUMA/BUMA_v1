@@ -10,7 +10,8 @@ var express     = require("express"),
     
 
 //ROUTES SETUP
-var indexRoutes      = require("./routes/index")
+var indexRoutes      = require("./routes/index");
+var calendarRoutes      = require("./routes/calendar");
 
 //DATABASE SETUP
 var url = process.env.DATABASEURL || "mongodb://localhost/bumadb";
@@ -43,7 +44,9 @@ app.use(function(req, res, next){
    next();
 });
 
+
 app.use("/", indexRoutes);
+app.use("/calendar", calendarRoutes);
 
 app.listen(process.env.PORT, process.env.IP, function(){
    console.log("BUMA APP START !!");
