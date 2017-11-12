@@ -47,9 +47,10 @@
           </div>
           <% }else{ %>
               <%if(currentUser.isManager){%>
-                <a id="user-type" class="navbar-brand" href="/"><i class="fa fa-briefcase" aria-hidden="true"></i> SUPERVISER</a>
+                <a id="user-type" class="navbar-brand" href="/"><i class="fa fa-briefcase" aria-hidden="true"></i> SUPERVISER </a>
               <%}else{%>
-                 <a id="user-type" class="navbar-brand" href="/"><i class="fa fa-user" aria-hidden="true"></i> EMPLOYEE</a>
+                 <a id="user-type" class="navbar-brand" href="/"><i class="fa fa-user" aria-hidden="true"></i> EMPLOYEE  <%=currentUser.username%></a>
+                 
               <%}%>
               
           <%}%>
@@ -77,10 +78,11 @@
     <a href="/calendar/emcalendar"><i class="fa fa-calendar" aria-hidden="true"></i>  View</a>
     <a href="/calendar/emlist"><i class="fa fa-calendar-plus-o" aria-hidden="true"></i>  Set Working</a>
     <a href="#"><i class="fa fa-coffee" aria-hidden="true"></i>  SetActivity</a>
+    <a href="/calendar/managerdayoff"><i class="fa fa-coffee" aria-hidden="true"></i>  DayOff Request</a>
     <a href="/register"><i class="fa fa-user-plus" aria-hidden="true"></i>  Create User</a>
     <%}else{%>
     <a href="/calendar"><i class="fa fa-calendar" aria-hidden="true"></i>  View</a>
-    <a href="#"><i class="fa fa-calendar-times-o" aria-hidden="true"></i> Take Official Leave</a>
+    <a href="/calendar/dayoff"><i class="fa fa-calendar-times-o" aria-hidden="true"></i> Take Official Leave</a>
     <%}%>
     <div class="send-to-bot">
        <a href="/logout"> <i class="fa fa-sign-out" aria-hidden="true"></i>  Logout</a>

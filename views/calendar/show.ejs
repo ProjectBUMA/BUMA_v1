@@ -1,10 +1,32 @@
 <% include ../partials/header %>  
-	<h1><%=currentUser.username%></h1>
+	<div class="em-view">
+	<%if(currentUser.isManager){%>
+		<h4><i class="fa fa-user" aria-hidden="true"></i> <%=(user.username)%></h4>
+	<%}%>
+	</div>
+	
       <% var test = currentUser.username %>
       
      <div class='test' showCalendar='<%= JSON.stringify(showCalendar) %>'></div>
      
      <script>
+     
+    var today = new Date();
+	var dd = today.getDate();
+	var mm = today.getMonth()+1; //January is 0!
+	var yyyy = today.getFullYear();
+	
+	if(dd<10) {
+	    dd = '0'+dd
+	} 
+	
+	if(mm<10) {
+	    mm = '0'+mm
+	} 
+	
+	today = mm + '/' + dd + '/' + yyyy;
+	document.write(today);
+	
 	$(document).ready(function() {
 		var showCalendar = $('.test').attr('showCalendar')
   		
@@ -17,23 +39,12 @@
 				center: 'title',
 				right: 'month,agendaWeek,agendaDay,listMonth'
 			},
-			defaultDate: '2017-10-12',
+			defaultDate: today,
 			navLinks: true, // can click day/week names to navigate views
 			selectable: true,
 			selectHelper: true,
 			select: function(start, end) {
-				//var title = prompt('Employee ID:');
-				//var workTime = prompt('Work time (Ex 8.00 - 16.00)');
-				// var eventData;
-				// if (title) {
-				// 	eventData = {
-				// 		title: title+" WorkTime : "+workTime,
-				// 		id: title,
-				// 		start: start,
-				// 		end: end
-				// 	};
-				//	$('#calendar').fullCalendar('renderEvent', myobj[0], true); // stick? = true
-				// }
+				
 				$('#calendar').fullCalendar('unselect');
 			},
 			eventLimit: true, // allow "more" link when too many events

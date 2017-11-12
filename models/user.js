@@ -8,7 +8,15 @@ var UserSchema = new mongoose.Schema({
     workCalendar : [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Calendar"
-    }]
+    }],
+    dayOff : [{
+        title: String,
+        start: String,
+        end : String,
+        calendarID : String,
+        message : String
+    }],
+    dayOffList : [String]
 });
 
 UserSchema.plugin(passportLocalMongoose)

@@ -3,7 +3,7 @@ var mongoose = require("mongoose");
 var CalendarSchema = new mongoose.Schema({
     title: String,
     start: String,
-    end : String
+    end : String,
 });
 
 

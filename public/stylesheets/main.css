@@ -25,7 +25,7 @@ body {
     height: 100%; /* 100% Full-height */
     width: 0; /* 0 width - change this with JavaScript */
     position: fixed; /* Stay in place */
-    z-index: 2; /* Stay on top */
+    z-index: 10; /* Stay on top */
     top: 0;
     left: 0;
     background-color: #111; /* Black*/
@@ -79,4 +79,8 @@ body {
 #calendar {
    		max-width: 900px;
    		margin: 0 auto;
+}
+
+.em-view{
+  padding-left: 11%;
 }

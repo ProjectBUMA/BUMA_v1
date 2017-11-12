@@ -9,28 +9,67 @@ router.get("/", middleware.isLoggedIn ,function(req, res){
      var userCalender = req.user.workCalendar;
      var showCalendar = [];
      var i = 0;
-     
-     userCalender.forEach(function(calendar){
-          Calendar.findById(calendar , function(err, thisCalendar) {
-               if(err){
-                    console.log(err)
-               }
-               var newObject = {};
-               newObject.title = thisCalendar.title;
-               newObject.start = thisCalendar.start;
-               newObject.end = thisCalendar.end;
-               
-               showCalendar.push(newObject);
-               i++;
-               if(i == userCalender.length){
-                    res.render("calendar/show" , {showCalendar:showCalendar});
-               }
+     if(userCalender.length >= 1){
+          userCalender.forEach(function(calendar){
+               Calendar.findById(calendar , function(err, thisCalendar) {
+                    if(err){
+                         console.log(err)
+                    }
+                    showCalendar.push(thisCalendar);
+                    i++;
+                    if(i == userCalender.length){
+                         res.render("calendar/show" , {showCalendar:showCalendar});
+                    }
+               })
           })
-     })
+     }
+     else{
+          res.send("no work")
+     }
     
 });
 
+//employee day off
+router.get("/dayoff",middleware.isLoggedIn ,function(req,res){
+     var user = req.user
+     var userCalender = req.user.workCalendar;
+     var showCalendar = [];
+     var i = 0;
+     
+     if(userCalender.length >= 1){
+          userCalender.forEach(function(calendar){
+               Calendar.findById(calendar , function(err, thisCalendar) {
+                    if(err){
+                         console.log(err)
+                    }
+                    showCalendar.push(thisCalendar);
+                    i++;
+                    if(i == userCalender.length){
+                         res.render("calendar/setdayoff" , {user:user,showCalendar:showCalendar});
+                    }
+               })
+          })
+     }
+     else{
+          res.send("no work")
+     }
+});
+
+//manager dayoff view
+router.get("/managerdayoff",middleware.isLoggedIn ,function(req,res){
+     
+     User.find({}, function(err, allUser){
+       if(err){
+           console.log(err);
+       } else {
+           res.render("calendar/managerdayoff" , {users : allUser});
+       }
+     });
+     
+});
+
 router.get("/:id/workingcalendar", middleware.isLoggedIn ,function(req, res){
+     
      
      User.findById(req.params.id , function(err , user){
         if(err){
@@ -40,26 +79,26 @@ router.get("/:id/workingcalendar", middleware.isLoggedIn ,function(req, res){
                var userCalender = user.workCalendar;
                var showCalendar = [];
                var i = 0;
-     
+               if(userCalender.length >= 1){
                userCalender.forEach(function(calendar){
                     Calendar.findById(calendar , function(err, thisCalendar) {
-                         if(err){
+                         if(err){ 
                               console.log(err)
                          }
-                         var newObject = {};
-                         newObject.title = thisCalendar.title;
-                         newObject.start = thisCalendar.start;
-                         newObject.end = thisCalendar.end;
-                         
-                         showCalendar.push(newObject);
+                         showCalendar.push(thisCalendar);
                          i++;
                          if(i == userCalender.length){
-                              res.render("calendar/show" , {showCalendar:showCalendar});
+                              res.render("calendar/show" , {user:user,showCalendar:showCalendar});
                     }
                     })
                })
+               }
+               else{
+                    res.send("no work")
+               }
          } 
      });
+     
 
 });
 
@@ -73,7 +112,7 @@ router.get("/emlist",middleware.isLoggedIn ,function(req,res){
        } else {
            res.render("calendar/emlist" , {users : allUser});
        }
-    });
+     });
 });
 
 //show all employees for calendar
@@ -100,6 +139,37 @@ router.get("/:id/settime",middleware.isLoggedIn ,function(req,res){
      });
 });
 
+//create new day off
+router.post("/setdayoff/:id/:workid" ,middleware.isLoggedIn, function(req,res){
+     User.findById(req.params.id,function(err, user) {
+         if(err){
+              console.log(err);
+             res.redirect("/");
+         }
+         else{
+              Calendar.findById(req.params.workid,function(err, dayOff) {
+                  if(err){
+                         req.flash("error", "Something went wrong");
+                  }
+                  else{
+                           var nDayOff = {}
+                           nDayOff.title = dayOff.title
+                           nDayOff.start = dayOff.start
+                           nDayOff.end = dayOff.end
+                           nDayOff.calendarID = dayOff._id
+                           user.dayOffList.push(dayOff._id)
+                           user.dayOff.push(nDayOff)
+                           user.save()
+                           console.log(user.dayOff)
+                           req.flash("success", "Successfully Send DayOff Request");
+                           res.redirect('/calendar/dayoff');
+                           
+                  }
+              })
+         }
+     })
+})
+
 //create new working for employee
 router.post("/:id/settime",middleware.isLoggedIn ,function(req,res){
      User.findById(req.params.id , function(err , user){
@@ -120,12 +190,30 @@ router.post("/:id/settime",middleware.isLoggedIn ,function(req,res){
                          user.workCalendar.push(newCalendar);
                          user.save();
                          req.flash("success", "Successfully added Working Calendar");
-                         res.redirect('/');
+                         res.redirect('/calendar/'+req.params.id+'/workingcalendar');
                     }
                });
           }
      });
 });
+
+
+//delete Approve DayOff
+router.delete("/dayoff/:id/:dayoffid" , function(req,res){
+    User.findById(req.params.id , function(err, user) {
+          if(err){
+               res.send(err)
+          }
+          else{
+               var index = user.dayOffList.indexOf(req.params.dayoffid);
+               console.log(user.dayOffList)
+               console.log(index)
+               res.send("asdsad")
+          }
+     })
+
+});
+
 
 
 function changeDateFormat(oldDate){
