@@ -1,0 +1,31 @@
+<% include ../partials/header %>
+
+     <form action="/calendar/setdayoff/<%=user._id%>/<%=dayOff._id%>" method="POST">
+     <div class="row">
+             <%=user.username%>
+     </div>
+     
+     <div class="row">
+             <%=dayOff.title%>
+     </div>
+     
+     <div class="row">
+             <%=dayOff.start%>
+     </div>
+     
+     <div class="row">
+             <%=dayOff.end%>
+     </div>
+     
+     <div class="form-group">
+          <br>
+          <input class="form-control" type="text" name="message" placeholder="Request Message">
+     </div>
+     
+     <div class="form-group">
+          <button class="btn btn-lg btn-primary btn-block">Submit</button>
+     </div>
+     
+     </form>
+
+<% include ../partials/footer %>

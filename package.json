@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start" : "node app.js"
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
@@ -23,6 +23,7 @@
     "ejs": "^2.5.7",
     "express": "^4.16.2",
     "express-session": "^1.15.6",
+    "gentelella": "^1.4.0",
     "method-override": "^2.3.10",
     "mongoose": "^4.12.4",
     "nodemon": "^1.12.1",
