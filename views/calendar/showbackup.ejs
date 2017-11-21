@@ -1,0 +1,63 @@
+<% include ../partials/header %>  
+	<div class="em-view">
+	<%if(currentUser.isManager){%>
+		<h4><i class="fa fa-user" aria-hidden="true"></i> <%=(user.username)%></h4>
+	<%}%>
+	</div>
+	
+      <% var test = currentUser.username %>
+      
+     <div class='test' showCalendar='<%= JSON.stringify(showCalendar) %>'></div>
+     
+     <script>
+     
+    var today = new Date();
+	var dd = today.getDate();
+	var mm = today.getMonth()+1; //January is 0!
+	var yyyy = today.getFullYear();
+	
+	if(dd<10) {
+	    dd = '0'+dd
+	} 
+	
+	if(mm<10) {
+	    mm = '0'+mm
+	} 
+	
+	today = mm + '/' + dd + '/' + yyyy;
+	document.write(today);
+	
+	$(document).ready(function() {
+		var showCalendar = $('.test').attr('showCalendar')
+  		
+  		var myobj = JSON.parse(showCalendar);
+  		console.log(myobj)
+		
+		$('#calendar').fullCalendar({
+			header: {
+				left: 'prev,next today',
+				center: 'title',
+				right: 'month,agendaWeek,agendaDay,listMonth'
+			},
+			defaultDate: today,
+			navLinks: true, // can click day/week names to navigate views
+			selectable: true,
+			selectHelper: true,
+			select: function(start, end) {
+				
+				$('#calendar').fullCalendar('unselect');
+			},
+			eventLimit: true, // allow "more" link when too many events
+			events: 	myobj
+			
+			
+		});
+		
+	});
+	</script>
+	
+     <div id='calendar'></div>
+     
+     
+
+<% include ../partials/footer %>

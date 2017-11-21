@@ -1,13 +1,41 @@
 <% include ../partials/header %>
 
-     <h1>Choose Employees</h1>
+     <!-- page content -->
+        <div class="right_col" role="main">
+          <div class="">
+            <div class="page-title">
+              <div class="title_left">
+                <h3>View Employees Work Schedule</h3>
+              </div>
+            </div>
 
-     <% users.forEach(function(user){ %>
-          <%if(!user.isManager){%>
-           <div class="row">
-                  <a href="/calendar/<%=user._id%>/workingcalendar"><%= user.username %></a>
+            <div class="clearfix"></div>
+
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                     
+                    <ul class="messages">
+                      <% users.forEach(function(user){ %>
+                        <%if(!user.isManager){%>
+                          <li>
+                            <img src="/images/img.jpg" class="avatar" alt="Avatar">
+                            <div class="message_wrapper">
+                              <h4 class="heading">Username : <a href="/calendar/<%=user._id%>/workingcalendar"><%= user.username %></a></h4>
+                              <blockquote class="message">Employees Name : <br>Employees Job : </blockquote>
+                              <br />
+                            </div>
+                          </li>
+                          <br>
+                        <%}%>
+                      <% }) %>
+                    </ul> 
+                    
+                </div>
+              </div>
+            </div>
           </div>
-          <%}%>
-     <% }) %>
+        </div>
+        <!-- /page content -->
 
 <% include ../partials/footer %>

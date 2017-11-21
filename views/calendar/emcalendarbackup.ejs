@@ -1,0 +1,13 @@
+<% include ../partials/header %>
+
+     <h1>Choose Employees</h1>
+
+     <% users.forEach(function(user){ %>
+          <%if(!user.isManager){%>
+           <div class="row">
+                  <a href="/calendar/<%=user._id%>/workingcalendar"><%= user.username %></a>
+          </div>
+          <%}%>
+     <% }) %>
+
+<% include ../partials/footer %>
