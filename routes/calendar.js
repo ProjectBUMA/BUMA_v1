@@ -272,12 +272,12 @@ router.delete("/dayoffapprove/:id/:dayoffid" , function(req,res){
                var index = user.dayOffList.indexOf(req.params.dayoffid);
                var workindex = user.workCalendar.indexOf(req.params.dayoffid);
                
+               
                for(var i = 0; i < user.dayOff.length; i++) {
                     
                     var obj = user.dayOff[i];
-               
                     if(user.dayOffList[index] == obj.calendarID){
-                       
+                         
                          if (index > -1 && workindex > -1) {
                               req.flash("success", "Successfully Approve DayOff Request");  
                               user.workCalendar.splice(workindex, 1)
@@ -287,7 +287,7 @@ router.delete("/dayoffapprove/:id/:dayoffid" , function(req,res){
                          }
                     }
                }
-               res.redirect("back");
+              // res.redirect("back");
           }
      })
 });

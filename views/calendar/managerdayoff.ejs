@@ -5,7 +5,7 @@
           <div class="">
             <div class="page-title">
               <div class="title_left">
-                <h3>Welcome to BUMA</h3>
+                <h3>View Day Off Request</h3>
               </div>
             </div>
 
@@ -15,21 +15,11 @@
               <div class="col-md-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Projects</h2>
+                    <h2>Day Off Request List</h2>
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
-                      <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                        <ul class="dropdown-menu" role="menu">
-                          <li><a href="#">Settings 1</a>
-                          </li>
-                          <li><a href="#">Settings 2</a>
-                          </li>
-                        </ul>
-                      </li>
-                      <li><a class="close-link"><i class="fa fa-close"></i></a>
-                      </li>
+                      
                     </ul>
                     <div class="clearfix"></div>
                   </div>
@@ -40,7 +30,7 @@
                     <table class="table table-striped projects">
                       <thead>
                         <tr>
-                          <th style="width: 1%">#</th>
+                          <th style="width: 1%"></th>
                           <th style="width: 20%">Username</th>
                           <th>Title</th>
                           <th>Start Date</th>
@@ -49,36 +39,47 @@
                         </tr>
                       </thead>
                       <tbody>
+                      
+                      <% users.forEach(function(user){ %>  
+                      <%if(!user.isManager){%>
+                      <% for(var i =0; i< user.dayOff.length;i++){ %>
+                        
                         <tr>
-                          <td>#</td>
+                          <td></td>
                           <td>
-                            <%= user.dayOff[i].title%>
-                            
+                                <%if(i == 0){%>
+                                  <%=user.username%>
+                                <% } %>
                           </td>
                           <td>
-                            <ul class="list-inline">
-
-                            </ul>
+                                <%=user.dayOff[i].title%>
                           </td>
-                          <td class="project_progress">
-
+                          <td >
+                                
+                                <%=user.dayOff[i].start.replace("T", " ")%>
                           </td>
                           <td>
-                            
+                                <%=user.dayOff[i].end.replace("T"," ")%>
                           </td>
                           
                           <td>
-                            <button type="button" class="btn btn-success btn-xs">Approve</button>
-                            <button class="btn btn-danger btn-xs"> Decline </button>
+                            
+                            
+                            
+                            <form action="/calendar/dayoffapprove/<%=user._id%>/<%=user.dayOff[i].calendarID%>?_method=DELETE" method="POST">
+                                <button class="btn btn-success btn-xs">Approve</button>
+                            </form>
+                            
+                            <form action="/calendar/dayoffreject/<%=user._id%>/<%=user.dayOff[i].calendarID%>?_method=DELETE" method="POST">
+                                <button class="btn btn-danger btn-xs"> Decline </button>
+                            </form>
+                            
+                            
                           </td>
                         </tr>
-
-                        
-                       
-
-
-
-
+                      <% }%>  
+                      <% } %>  
+                      <% }) %>  
                       </tbody>
                     </table>
                     <!-- end project list -->
