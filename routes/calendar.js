@@ -183,7 +183,8 @@ router.post("/setdayoff/:id/:workid" ,middleware.isLoggedIn, function(req,res){
                   }
                   else{
                            var nDayOff = {}
-                           nDayOff.message = req.body.message
+                           
+                           nDayOff.message = req.body.message.substring(0,30)
                            nDayOff.title = dayOff.title
                            nDayOff.start = dayOff.start
                            nDayOff.end = dayOff.end
@@ -287,7 +288,7 @@ router.delete("/dayoffapprove/:id/:dayoffid" , function(req,res){
                          }
                     }
                }
-              // res.redirect("back");
+               res.redirect("back");
           }
      })
 });

@@ -1,0 +1,20 @@
+<% include ../partials/header %>
+
+     <% showCalendar.forEach(function(work){ %>
+          
+           <div class="row">
+                 <form action="/calendar/message/<%=user._id%>/<%=work._id%>" method="GET">
+                  <%if(user.dayOffList.indexOf(work._id)==-1){%>
+                       <p> Title: <%=work.title%> <br></p>   
+                       <p> StartDate : <%=work.start%>  <br></p>
+                       <p> EndDate : <%=work.end%> <br> </p>
+                       <%=user.dayOffList%><br>
+                       <%=work._id%>
+                       <button href="/" class="btn btn-large">Take a Day Off</button>
+                    <% } %>
+                 </form>
+          </div>
+     
+     <% }) %>
+
+<% include ../partials/footer %>

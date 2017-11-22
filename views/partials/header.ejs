@@ -38,7 +38,7 @@
               </div>
               <div class="profile_info">
                 <span>Welcome,</span>
-                <h2>John Doe</h2>
+                <h2><%=currentUser.username%></h2>
               </div>
               <div class="clearfix"></div>
             </div>
@@ -50,12 +50,18 @@
               <div class="menu_section">
                 <h3>General</h3>
                 <ul class="nav side-menu">
-                  <li><a href="/"><i class="fa fa-home"></i> Home </a></li>
-                  <li><a href="/calendar/emlist"><i class="fa fa-calendar"></i> Set Working Date </a></li>
-                  <li><a href="#"><i class="fa fa-coffee"></i> Set Activities Date </a></li>
-                  <li><a href="/calendar/emcalendar"><i class="fa fa-desktop"></i> View Employees Calendars</a></li>
-                  <li><a href="/calendar/managerdayoff"><i class="fa fa-plane"></i> View Dayoff Request</a></li>
-                  <li><a href="/register"><i class="fa fa-user-plus"></i> Create User </a></li>
+                  <%if(currentUser.isManager){%>
+                    <li><a href="/"><i class="fa fa-home"></i> Home </a></li>
+                    <li><a href="/calendar/emlist"><i class="fa fa-calendar"></i> Set Working Date </a></li>
+                    <li><a href="#"><i class="fa fa-coffee"></i> Set Activities Date </a></li>
+                    <li><a href="/calendar/emcalendar"><i class="fa fa-desktop"></i> View Employees Calendars</a></li>
+                    <li><a href="/calendar/managerdayoff"><i class="fa fa-plane"></i> View Dayoff Request</a></li>
+                    <li><a href="/register"><i class="fa fa-user-plus"></i> Create User </a></li>
+                  
+                  <%}else{%>
+                  <li><a href="/calendar"><i class="fa fa-desktop"></i> View Your Calendars</a></li>
+                  <li><a href="/calendar/dayoff"><i class="fa fa-calendar-times-o"></i> Take Official Leave</a></li>
+                  <%}%>
                 </ul>
               </div>
               
@@ -73,7 +79,7 @@
               <a data-toggle="tooltip" data-placement="top" title="Lock">
                 <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
               </a>
-              <a data-toggle="tooltip" data-placement="top" title="Logout" href="login.html">
+              <a data-toggle="tooltip" data-placement="top" title="Logout" href="/logout">
                 <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
               </a>
             </div>
@@ -92,19 +98,18 @@
               <ul class="nav navbar-nav navbar-right">
                 <li class="">
                   <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <img src="/images/img.jpg" alt="">John Doe
+                    <img src="/images/img.jpg" alt=""><%=currentUser.username%>
                     <span class=" fa fa-angle-down"></span>
                   </a>
                   <ul class="dropdown-menu dropdown-usermenu pull-right">
                     <li><a href="javascript:;"> Profile</a></li>
                     <li>
                       <a href="javascript:;">
-                        <span class="badge bg-red pull-right">50%</span>
                         <span>Settings</span>
                       </a>
                     </li>
                     
-                    <li><a href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+                    <li><a href="/logout"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
                   </ul>
                 </li>
 

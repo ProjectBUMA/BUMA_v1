@@ -64,12 +64,18 @@
               <div class="menu_section">
                 <h3>General</h3>
                 <ul class="nav side-menu">
+                  <%if(currentUser.isManager){%>
                   <li><a href="/"><i class="fa fa-home"></i> Home </a></li>
                   <li><a href="/calendar/emlist"><i class="fa fa-calendar"></i> Set Working Date </a></li>
                   <li><a href="#"><i class="fa fa-coffee"></i> Set Activities Date </a></li>
                   <li><a href="/calendar/emcalendar"><i class="fa fa-desktop"></i> View Employees Calendars</a></li>
                   <li><a href="/calendar/managerdayoff"><i class="fa fa-plane"></i> View Dayoff Request</a></li>
                   <li><a href="/register"><i class="fa fa-user-plus"></i> Create User </a></li>
+                  
+                  <%}else{%>
+                  <li><a href="/calendar"><i class="fa fa-desktop"></i> View Your Calendars</a></li>
+                  <li><a href="/calendar/dayoff"><i class="fa fa-calendar-times-o"></i> Take Official Leave</a></li>
+                  <% } %>
                 </ul>
               </div>
               
