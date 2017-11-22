@@ -5,7 +5,7 @@ var User = require("../models/user");
 
 //root route
 router.get("/", function(req, res){
-    res.render("index");
+    res.render("newindex");
 });
 
 // show register form
@@ -35,7 +35,7 @@ router.get("/login", function(req, res){
 //handling login logic
 router.post("/login", passport.authenticate("local", 
     {
-        successRedirect: "/",
+        successRedirect: "/calendar/dashboardhome",
         failureRedirect: "/login",
         failureFlash: true,
         successFlash: 'Login Successful'

@@ -79,6 +79,7 @@
                   <li><a href="/calendar/setactivity"><i class="fa fa-coffee"></i> Set Activities Date </a></li>
                   <li><a href="/calendar/activity"><i class="fa fa-desktop"></i> View Activity</a></li>
                   <%}%>
+
                 </ul>
               </div>
               
@@ -126,7 +127,7 @@
                       </a>
                     </li>
                     
-                    <li><a href="/logout"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+                    <li><a href="/login"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
                   </ul>
                 </li>
 
@@ -136,13 +137,41 @@
           </div>
         </div>
         <!-- /top navigation -->
+      
+
+<script>
+	
+	$(function () {
+           
+            $('#startdate,#enddate').datetimepicker({
+                useCurrent: false,
+                minDate: moment()
+            });
+            $('#startdate').datetimepicker().on('dp.change', function (e) {
+                var incrementDay = moment(new Date(e.date));
+                incrementDay.add(1, 'hours');
+                $('#enddate').data('DateTimePicker').minDate(incrementDay);
+               <!--$(this).data("DateTimePicker").hide();-->
+            });
+
+            $('#enddate').datetimepicker().on('dp.change', function (e) {
+                var decrementDay = moment(new Date(e.date));
+                decrementDay.subtract(1, 'hours');
+                $('#startdate').data('DateTimePicker').maxDate(decrementDay);
+                 <!--$(this).data("DateTimePicker").hide();-->
+            });
+
+        });
+    
+</script>
+
 
         <!-- page content -->
         <div class="right_col" role="main">
           <div class="">
             <div class="page-title">
               <div class="title_left">
-                <h3>Calendar</h3>
+                <h3>Date Picker</h3>
               </div>
             </div>
 
@@ -152,72 +181,78 @@
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>
-                    	<%if(currentUser.isManager){%>
-						View <i class="fa fa-user" aria-hidden="true"></i> <%=(user.username)%> Schedule
-					<%}%>
-                    
-                    </h2>
+                    <h2><i class="fa fa-coffee" aria-hidden="true"></i> Set Activity Time</h2>
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
-                      	<div class="em-view">
+                      
+                    <form action="/calendar/<%=user._id%>/setactivitytime" method="POST">
+                        
+                        <div class="form-horizontal">
 
-				</div>
-				
-			      <% var test = currentUser.username %>
-			      
-			     <div class='test' showCalendar='<%= JSON.stringify(showCalendar) %>'></div>
-			     
-			     <script>
-			     
-			    	var today = new Date();
-				var dd = today.getDate();
-				var mm = today.getMonth()+1; //January is 0!
-				var yyyy = today.getFullYear();
-				
-				if(dd<10) {
-				    dd = '0'+dd
-				} 
-				
-				if(mm<10) {
-				    mm = '0'+mm
-				} 
-				
-				today = mm + '/' + dd + '/' + yyyy;
-			//	document.write(today);
-				
-				$(document).ready(function() {
-					var showCalendar = $('.test').attr('showCalendar')
-			  		
-			  		var myobj = JSON.parse(showCalendar);
-			  		console.log(myobj)
-					
-					$('#calendar').fullCalendar({
-						header: {
-							left: 'prev,next today',
-							center: 'title',
-							right: 'month,agendaWeek,agendaDay,listMonth'
-						},
-						defaultDate: today,
-						navLinks: true, // can click day/week names to navigate views
-						selectable: true,
-						selectHelper: true,
-						select: function(start, end) {
-							
-							$('#calendar').fullCalendar('unselect');
-						},
-						eventLimit: true, // allow "more" link when too many events
-						events: 	myobj
-						
-						
-					});
-					
-				});
-				</script>
-				
-			     <div id='calendar'></div>
-                    
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    <div class="form-group">
+                                        <div class="col-sm-3">
+                                            <label for="title">Activity Title</label>
+                                        </div>
+                                        <!--<div class="col-sm-5">-->
+                                        <!--  <input class="form-control" type="text" name="calendar[title]" placeholder="title">-->
+                                        <!--</div>-->
+                                        <div class="col-sm-5">
+                                            <div class="input-group date" id="title">
+                                                <input type="text" name = "calendar[title]" placeholder="" class="form-control" />
+                                            <span class="input-group-addon">
+                                                    <span class="glyphicon-book glyphicon"></span>
+                                                </span>    
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    <div class="form-group">
+                                        <div class="col-sm-3">
+                                            <label for="startdate">StartDate</label>
+                                        </div>
+                                        <div class="col-sm-5">
+                                            <div class="input-group date" id="startdate">
+                                                <input type="text" name = "calendar[start]" class="form-control" />
+                                                <span class="input-group-addon">
+                                                    <span class="glyphicon-calendar glyphicon"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    <div class="form-group">
+                                        <div class="col-sm-3">
+                                            <label for="enddate">EndDate</label>
+                                        </div>
+                                        <div class="col-sm-5">
+                                            <div class="input-group date" id="enddate">
+                                                <input type="text" name = "calendar[end]" class="form-control" />
+                                                <span class="input-group-addon">
+                                                    <span class="glyphicon-calendar glyphicon"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <button class="btn btn-success ">Submit</button>
+                               
+                            </div>
+                        </div>
+                    </form>
                   </div>
                 </div>
               </div>

@@ -4,6 +4,14 @@ var middleware = require("../middleware");
 var User = require("../models/user");
 var Calendar = require("../models/calendar");
 
+var HolyID = "5a156c6cfbc351189c08e172"
+
+//DashBoardHomepage
+router.get("/dashboardhome", middleware.isLoggedIn ,function(req, res){
+     res.render("dashboardhome")
+});
+
+
 //INDEX - show calendar
 router.get("/", middleware.isLoggedIn ,function(req, res){
      var userCalender = req.user.workCalendar;
@@ -69,6 +77,7 @@ router.get("/managerdayoff",middleware.isLoggedIn ,function(req,res){
      
 });
 
+//manager view employee calendar
 router.get("/:id/workingcalendar", middleware.isLoggedIn ,function(req, res){
      
      User.findById(req.params.id , function(err , user){
@@ -96,6 +105,39 @@ router.get("/:id/workingcalendar", middleware.isLoggedIn ,function(req, res){
                }
                else{
                     res.send("no work")
+               }
+         } 
+     });
+});
+
+//view activity
+router.get("/activity", middleware.isLoggedIn ,function(req, res){
+     
+     User.findById(HolyID , function(err , user){
+        if(err){
+             console.log(err);
+        }  
+        else{
+               var userCalender = user.workCalendar;
+               var showCalendar = [];
+               var i = 0;
+               
+               if(userCalender.length >= 1){
+                    userCalender.forEach(function(calendar){
+                         Calendar.findById(calendar , function(err, thisCalendar) {
+                              if(err){ 
+                                   console.log(err)
+                              }
+                              showCalendar.push(thisCalendar);
+                              i++;
+                              if(i == userCalender.length){
+                                   res.render("calendar/show" , {user:user,showCalendar:showCalendar});
+                              }
+                         })
+                    })
+               }
+               else{
+                    res.send("no activity")
                }
          } 
      });
@@ -137,6 +179,20 @@ router.get("/:id/settime",middleware.isLoggedIn ,function(req,res){
         }  
         else{
              res.render("calendar/settime" , {user:user});
+        }
+     });
+     
+});
+
+//set activity |HolySpace Do not Delete it ID : 5a156c6cfbc351189c08e172 |
+router.get("/setactivity",middleware.isLoggedIn ,function(req,res){
+     
+     User.findById(HolyID , function(err , user){
+        if(err){
+             res.redirect("back");
+        }  
+        else{
+             res.render("calendar/setactivitytime" , {user:user});
         }
      });
      
@@ -225,6 +281,36 @@ router.post("/:id/settime",middleware.isLoggedIn ,function(req,res){
                          user.save();
                          req.flash("success", "Successfully added Working Calendar");
                          res.redirect('/calendar/'+req.params.id+'/workingcalendar');
+                    }
+               });
+          }
+     });
+});
+
+
+//create new activity 
+router.post("/:id/setactivitytime",middleware.isLoggedIn ,function(req,res){
+     
+     User.findById(req.params.id , function(err , user){
+          if(err){
+             console.log(err);
+             res.redirect("/");
+          }
+          else{
+               var calendar = req.body.calendar
+               
+               calendar.start = changeDateFormat(calendar.start);
+               calendar.end = changeDateFormat(calendar.end);
+               
+               Calendar.create(req.body.calendar , function(err,newCalendar){
+                    if(err){
+                         req.flash("error", "Something went wrong");
+                    }
+                    else{
+                         user.workCalendar.push(newCalendar);
+                         user.save();
+                         req.flash("success", "Successfully added Working Calendar");
+                         res.redirect('/calendar/activity');
                     }
                });
           }

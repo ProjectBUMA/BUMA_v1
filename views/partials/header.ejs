@@ -26,7 +26,7 @@
         <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a href="index.html" class="site_title"><i class="fa fa-suitcase"></i> <span>BUMA</span></a>
+              <a href="/" class="site_title"><i class="fa fa-suitcase"></i> <span>BUMA</span></a>
             </div>
 
             <div class="clearfix"></div>
@@ -51,16 +51,19 @@
                 <h3>General</h3>
                 <ul class="nav side-menu">
                   <%if(currentUser.isManager){%>
-                    <li><a href="/"><i class="fa fa-home"></i> Home </a></li>
+                    <li><a href="/calendar/dashboardhome"><i class="fa fa-home"></i> Home </a></li>
                     <li><a href="/calendar/emlist"><i class="fa fa-calendar"></i> Set Working Date </a></li>
-                    <li><a href="#"><i class="fa fa-coffee"></i> Set Activities Date </a></li>
+                    <li><a href="/calendar/setactivity"><i class="fa fa-coffee"></i> Set Activities Date </a></li>
                     <li><a href="/calendar/emcalendar"><i class="fa fa-desktop"></i> View Employees Calendars</a></li>
+                    <li><a href="/calendar/activity"><i class="fa fa-desktop"></i> View Activity</a></li>
                     <li><a href="/calendar/managerdayoff"><i class="fa fa-plane"></i> View Dayoff Request</a></li>
                     <li><a href="/register"><i class="fa fa-user-plus"></i> Create User </a></li>
                   
                   <%}else{%>
                   <li><a href="/calendar"><i class="fa fa-desktop"></i> View Your Calendars</a></li>
                   <li><a href="/calendar/dayoff"><i class="fa fa-calendar-times-o"></i> Take Official Leave</a></li>
+                  <li><a href="/calendar/setactivity"><i class="fa fa-coffee"></i> Set Activities Date </a></li>
+                  <li><a href="/calendar/activity"><i class="fa fa-desktop"></i> View Activity</a></li>
                   <%}%>
                 </ul>
               </div>
