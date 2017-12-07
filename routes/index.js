@@ -16,7 +16,7 @@ router.get("/register", middleware.isManager  , function(req, res){
 
 //handle sign up logic
 router.post("/register" , middleware.isManager , function(req, res){
-    var newUser = new User({username: req.body.username , realname : req.body.realname});
+    var newUser = new User({username: req.body.username , realname : req.body.realname , jobtitle : req.body.jobtitle});
     User.register(newUser, req.body.password, function(err, user){
         if(err){
             req.flash("error" , err.message);
@@ -24,7 +24,7 @@ router.post("/register" , middleware.isManager , function(req, res){
         }
        
         req.flash("success" , "Accout Created");
-        res.redirect("/"); 
+        res.redirect("calendar/dashboardhome"); 
     });
 });
 

@@ -14,7 +14,7 @@ var indexRoutes      = require("./routes/index");
 var calendarRoutes      = require("./routes/calendar");
 
 //DATABASE SETUP
-var url = process.env.DATABASEURL || "mongodb://localhost/new_bumadbV2";
+var url = process.env.DATABASEURL || "mongodb://localhost/new_bumadbV4";
 mongoose.connect(url);
 
 
