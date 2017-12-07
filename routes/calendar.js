@@ -26,7 +26,7 @@ router.get("/", middleware.isLoggedIn ,function(req, res){
                     showCalendar.push(thisCalendar);
                     i++;
                     if(i == userCalender.length){
-                         res.render("calendar/show" , {showCalendar:showCalendar});
+                         res.render("calendar/show" , {showCalendar:showCalendar , act:"0"});
                     }
                })
           })
@@ -98,7 +98,7 @@ router.get("/:id/workingcalendar", middleware.isLoggedIn ,function(req, res){
                               showCalendar.push(thisCalendar);
                               i++;
                               if(i == userCalender.length){
-                                   res.render("calendar/show" , {user:user,showCalendar:showCalendar});
+                                   res.render("calendar/show" , {user:user,showCalendar:showCalendar , act:"0"});
                               }
                          })
                     })
@@ -131,7 +131,7 @@ router.get("/activity", middleware.isLoggedIn ,function(req, res){
                               showCalendar.push(thisCalendar);
                               i++;
                               if(i == userCalender.length){
-                                   res.render("calendar/show" , {user:user,showCalendar:showCalendar});
+                                   res.render("calendar/show" , {user:user,showCalendar:showCalendar, act:"1"});
                               }
                          })
                     })
@@ -178,6 +178,7 @@ router.get("/:id/settime",middleware.isLoggedIn ,function(req,res){
              res.redirect("back");
         }  
         else{
+             console.log("wqe");
              res.render("calendar/settime" , {user:user});
         }
      });

@@ -68,16 +68,13 @@
                           
                           <td>
                             
-                            
-                            
-                            <form action="/calendar/dayoffapprove/<%=user._id%>/<%=user.dayOff[i].calendarID%>?_method=DELETE" method="POST">
+                            <form action="/calendar/dayoffapprove/<%=user._id%>/<%=user.dayOff[i].calendarID%>?_method=DELETE" method="POST" style="display:inline-block;">
                                 <button class="btn btn-success btn-xs">Approve</button>
                             </form>
                             
-                            <form action="/calendar/dayoffreject/<%=user._id%>/<%=user.dayOff[i].calendarID%>?_method=DELETE" method="POST">
+                            <form action="/calendar/dayoffreject/<%=user._id%>/<%=user.dayOff[i].calendarID%>?_method=DELETE" method="POST" style="display:inline-block;">
                                 <button class="btn btn-danger btn-xs"> Decline </button>
                             </form>
-                            
                             
                           </td>
                         </tr>

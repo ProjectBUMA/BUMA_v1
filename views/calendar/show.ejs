@@ -153,9 +153,15 @@
                 <div class="x_panel">
                   <div class="x_title">
                     <h2>
-                    	<%if(currentUser.isManager){%>
-						View <i class="fa fa-user" aria-hidden="true"></i> <%=(user.username)%> Schedule
-					<%}%>
+                      <%if(act=="1"){%>
+                        View Activities Schedule
+                    
+                      
+                    	<%}else if(currentUser.isManager && act=="0"){%>
+            						View <i class="fa fa-user" aria-hidden="true"></i> <%=(user.username)%> Schedule
+            					<%}else if(act=="0"){%>
+            					  View Your Schedule
+            					<%}%>
                     
                     </h2>
                     <div class="clearfix"></div>
