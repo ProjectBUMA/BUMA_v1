@@ -48,6 +48,12 @@ app.use(function(req, res, next){
 app.use("/", indexRoutes);
 app.use("/calendar", calendarRoutes);
 
+
+
+app.get('*', function(req, res){
+  res.render("error/page_404");
+});
+
 app.listen(process.env.PORT, process.env.IP, function(){
    console.log("BUMA APP START !!");
 });

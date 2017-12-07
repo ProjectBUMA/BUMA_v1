@@ -32,7 +32,7 @@ router.get("/", middleware.isLoggedIn ,function(req, res){
           })
      }
      else{
-          res.send("no work")
+          res.render("error/nowork")
      }
     
 });
@@ -59,12 +59,12 @@ router.get("/dayoff",middleware.isLoggedIn ,function(req,res){
           })
      }
      else{
-          res.send("no work")
+          res.render("error/nowork")
      }
 });
 
 //manager dayoff view
-router.get("/managerdayoff",middleware.isLoggedIn ,function(req,res){
+router.get("/managerdayoff", middleware.isManager ,function(req,res){
      
      User.find({}, function(err, allUser){
          if(err){
@@ -78,7 +78,7 @@ router.get("/managerdayoff",middleware.isLoggedIn ,function(req,res){
 });
 
 //manager view employee calendar
-router.get("/:id/workingcalendar", middleware.isLoggedIn ,function(req, res){
+router.get("/:id/workingcalendar",  middleware.isManager  ,function(req, res){
      
      User.findById(req.params.id , function(err , user){
         if(err){
@@ -104,7 +104,7 @@ router.get("/:id/workingcalendar", middleware.isLoggedIn ,function(req, res){
                     })
                }
                else{
-                    res.send("no work")
+                    res.render("error/nowork")
                }
          } 
      });
@@ -145,7 +145,7 @@ router.get("/activity", middleware.isLoggedIn ,function(req, res){
 
 
 //show all employees
-router.get("/emlist",middleware.isLoggedIn ,function(req,res){
+router.get("/emlist" ,middleware.isManager  ,function(req,res){
      
      User.find({}, function(err, allUser){
        if(err){
@@ -158,7 +158,7 @@ router.get("/emlist",middleware.isLoggedIn ,function(req,res){
 });
 
 //show all employees for calendar
-router.get("/emcalendar",middleware.isLoggedIn ,function(req,res){
+router.get("/emcalendar", middleware.isManager ,function(req,res){
      
      User.find({}, function(err, allUser){
        if(err){
@@ -171,7 +171,7 @@ router.get("/emcalendar",middleware.isLoggedIn ,function(req,res){
 });
 
 //set employee work date
-router.get("/:id/settime",middleware.isLoggedIn ,function(req,res){
+router.get("/:id/settime", middleware.isManager  ,function(req,res){
      
      User.findById(req.params.id , function(err , user){
         if(err){
@@ -260,7 +260,7 @@ router.post("/setdayoff/:id/:workid" ,middleware.isLoggedIn, function(req,res){
 })
 
 //create new working for employee
-router.post("/:id/settime",middleware.isLoggedIn ,function(req,res){
+router.post("/:id/settime", middleware.isManager  ,function(req,res){
      
      User.findById(req.params.id , function(err , user){
           if(err){
